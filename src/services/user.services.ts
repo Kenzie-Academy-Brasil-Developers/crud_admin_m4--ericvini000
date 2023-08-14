@@ -1,7 +1,7 @@
 import { QueryResult } from "pg";
 import { client } from "../database";
 import format from "pg-format";
-import { TUserCreate, TUserRead } from "../interfaces";
+import { TUser, TUserCreate, TUserRead, TUserReturn } from "../interfaces";
 import { userSchemaRead, userSchemaReturn } from "../schemas/user.schema";
 
 const create = async (payload: TUserCreate) => {
@@ -29,4 +29,26 @@ const read = async () => {
   return userSchemaRead.parse(queryResult.rows);
 };
 
-export default { create, read };
+const retrieve = async (id: number) => {
+  const queryString: string = `
+
+  SELECT 
+    *
+  FROM 
+    "users" AS "u"
+  JOIN
+    "userCourses" AS "uc"
+  JOIN
+    "courses" AS "c"
+  ON
+    "u"."id"="uc"."userId"
+  WHERE
+    id=$1;
+  `;
+
+  const queryResult: QueryResult = await client.query(queryString, [id]);
+
+  return userSchemaReturn.parse(queryResult.rows[0]);
+};
+
+export default { create, read, retrieve };

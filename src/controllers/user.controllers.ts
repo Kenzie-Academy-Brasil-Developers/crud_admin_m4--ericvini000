@@ -8,7 +8,7 @@ const create = async (
   next: NextFunction
 ): Promise<Response> => {
   const payload: TUserCreate = req.body;
-  const userCreated:TUserReturn = await userServices.create(payload);
+  const userCreated: TUserReturn = await userServices.create(payload);
 
   return res.status(201).json(userCreated);
 };
@@ -23,4 +23,16 @@ const read = async (
   return res.status(200).json(users);
 };
 
-export default { create, read };
+const retrieve = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response> => {
+  const { userId } = res.locals;
+
+  const user: TUserReturn = await userServices.retrieve(userId)
+
+  return res.status(200).json(user);
+};
+
+export default { create, read, retrieve };
