@@ -1,6 +1,9 @@
-import express, { Application, json } from 'express'
+import express, { Application, json } from "express";
+import { handleErrors } from "./middlewares";
 
-const app: Application = express()
-app.use(json())
+const app: Application = express();
+app.use(json());
 
-export default app
+app.use(handleErrors);
+
+export default app;
