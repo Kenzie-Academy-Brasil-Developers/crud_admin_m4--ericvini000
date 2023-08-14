@@ -9,7 +9,7 @@ const checkUserIdExists = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = Number(req.params.id);
+  const userId: number = Number(req.params.userId);
 
   const queryString: string = `
     SELECT * FROM "users" WHERE id=$1;

@@ -2,7 +2,7 @@ import { QueryResult } from "pg";
 import { client } from "../database";
 import format from "pg-format";
 import { TUser, TUserCreate, TUserRead, TUserReturn } from "../interfaces";
-import { userSchemaRead, userSchemaReturn } from "../schemas/user.schema";
+import { userSchemaRead, userSchemaReturn } from "../schemas/user.schemas";
 
 const create = async (payload: TUserCreate) => {
   const queryString: string = format(

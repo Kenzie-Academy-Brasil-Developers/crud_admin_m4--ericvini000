@@ -5,7 +5,7 @@ import {
   checkUserIdExists,
   zodValidateBody,
 } from "../middlewares";
-import { userSchemaCreate } from "../schemas/user.schema";
+import { userSchemaCreate } from "../schemas/user.schemas";
 
 const userRouter: Router = Router();
 
@@ -18,5 +18,6 @@ userRouter.post(
 );
 
 userRouter.get("", userControllers.read);
+userRouter.get("/:userId/courses", userControllers.retrieve);
 
 export default userRouter;

@@ -4,7 +4,7 @@ import {
   userSchemaCreate,
   userSchemaRead,
   userSchemaReturn,
-} from "../schemas/user.schema";
+} from "../schemas/user.schemas";
 
 type TUser = z.infer<typeof userSchema>;
 

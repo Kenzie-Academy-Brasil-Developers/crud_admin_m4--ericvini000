@@ -30,7 +30,7 @@ const retrieve = async (
 ): Promise<Response> => {
   const { userId } = res.locals;
 
-  const user: TUserReturn = await userServices.retrieve(userId)
+  const user: TUserReturn = await userServices.retrieve(userId);
 
   return res.status(200).json(user);
 };
