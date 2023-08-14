@@ -1,3 +1,4 @@
 import handleErrors from "./handleErrors.middeware";
+import zodValidateBody from "./zodValidateBody.middleware";
 
-export { handleErrors };
+export { handleErrors, zodValidateBody };
