@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { userControllers } from "../controllers";
 import {
-  checkCourseAndUserIdExists,
+  authenticateToken,
+  checkTokenExists,
   checkUserEmailExists,
   checkUserIdExists,
+  verifyUserPermission,
   zodValidateBody,
 } from "../middlewares";
 import { userSchemaCreate } from "../schemas/user.schemas";
@@ -17,8 +19,14 @@ userRouter.post(
   userControllers.create
 );
 
-userRouter.get("", userControllers.read);
+userRouter.get("", authenticateToken, verifyUserPermission, userControllers.read);
 
-userRouter.get("/:userId/courses", checkUserIdExists, userControllers.retrieve);
+userRouter.get(
+  "/:userId/courses",
+  checkUserIdExists,
+  authenticateToken,
+  verifyUserPermission,
+  userControllers.retrieve
+);
 
 export default userRouter;

@@ -4,6 +4,9 @@ import checkUserEmailExists from "./checkUserEmailExists.middleware";
 import checkUserIdExists from "./checkUserIdExists.middleware";
 import checkCourseAndUserIdExists from './checkCourseAndUserIdExists.middleware';
 import checkCourseIdExists from './checkCourseIdExists.middleware';
+import checkTokenExists from './checkTokenExists.middleware';
+import authenticateToken from './checkTokenExists.middleware';
+import verifyUserPermission from './verifyUserPermission.middleware';
 
 export {
   handleErrors,
@@ -11,5 +14,8 @@ export {
   checkUserEmailExists,
   checkUserIdExists,
   checkCourseAndUserIdExists,
-  checkCourseIdExists
+  checkCourseIdExists,
+  checkTokenExists,
+  authenticateToken,
+  verifyUserPermission
 };
