@@ -13,7 +13,6 @@ const userRouter: Router = Router();
 userRouter.post(
   "",
   zodValidateBody(userSchemaCreate),
-  checkUserIdExists,
   checkUserEmailExists,
   userControllers.create
 );

@@ -9,4 +9,6 @@ const userCourseSchema = z.object({
   userName: z.string().max(50),
 });
 
-export { userCourseSchema };
+const userCourseSchemaRead = userCourseSchema.array();
+
+export { userCourseSchema, userCourseSchemaRead };

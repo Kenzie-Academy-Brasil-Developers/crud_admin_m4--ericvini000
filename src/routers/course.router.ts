@@ -2,6 +2,7 @@ import { Router } from "express";
 import { courseControllers } from "../controllers";
 import {
   checkCourseAndUserIdExists,
+  checkCourseIdExists,
   zodValidateBody,
 } from "../middlewares";
 import { courseSchemaCreate } from "../schemas";
@@ -21,5 +22,11 @@ coursesRouter.post(
 );
 
 coursesRouter.get("", courseControllers.read);
+
+coursesRouter.get(
+  "/:courseId/users",
+  checkCourseIdExists,
+  courseControllers.retrieve
+);
 
 export default coursesRouter;

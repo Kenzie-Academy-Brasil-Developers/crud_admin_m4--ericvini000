@@ -8,8 +8,9 @@ import { userCourseSchema } from "../schemas";
 import { hash } from "bcryptjs";
 
 const create = async (payload: TUserCreate) => {
-  payload.password = await hash(payload.password, 10);
   
+  payload.password = await hash(payload.password, 10);
+
   const queryString: string = format(
     `
     INSERT INTO "users"

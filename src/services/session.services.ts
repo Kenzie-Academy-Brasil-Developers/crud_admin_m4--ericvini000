@@ -24,12 +24,14 @@ const login = async (payload: TSession): Promise<TSessionReturn> => {
     rows: [user],
   } = queryResult;
 
+  if (!emailExists) throw new AppError("Wrong email/password", 401);
+
   const verifyPassword: boolean = await compare(
     payload.password,
     user.password
   );
 
-  if (!emailExists || !verifyPassword) {
+  if (!verifyPassword) {
     throw new AppError("Wrong email/password", 401);
   }
 
