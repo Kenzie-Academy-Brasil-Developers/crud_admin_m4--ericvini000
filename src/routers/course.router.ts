@@ -38,7 +38,7 @@ coursesRouter.get(
 );
 
 coursesRouter.delete(
-  ":courseId/users/:userId",
+  "/:courseId/users/:userId",
   checkCourseAndUserIdExists,
   authenticateToken,
   verifyUserPermission,

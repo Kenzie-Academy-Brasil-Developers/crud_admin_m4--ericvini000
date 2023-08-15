@@ -39,7 +39,7 @@ const retrieve = async (courseId: number) => {
     "c"."id" AS "courseId",
     "c"."name" AS "courseName",
     "c"."description" AS "courseDescription",
-    "uc"."active" AS "courseActive",
+    "uc"."active" AS "userActiveInCourse",
     "u"."id" AS "userId",
     "u"."name" AS "userName"
   FROM 
@@ -72,14 +72,15 @@ const register = async (courseId: number, userId: number) => {
 };
 
 const destroy = async (courseId: number, userId: number) => {
+
   const queryString: string = `
-    UPDATE
-    "userCourses" as
-    SET("active") = true
-    WHERE courseId=$1 AND userId=$2;
+  UPDATE "userCourses" 
+  SET "active"= true
+  WHERE "courseId"=$1 AND "userId"=$2;
   `;
 
   await client.query(queryString, [courseId, userId]);
+  return;
 };
 
 export default { create, read, register, retrieve, destroy };
