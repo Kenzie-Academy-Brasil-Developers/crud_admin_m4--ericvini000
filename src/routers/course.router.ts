@@ -29,4 +29,10 @@ coursesRouter.get(
   courseControllers.retrieve
 );
 
+coursesRouter.delete(
+  ":courseId/users/:userId",
+  checkCourseAndUserIdExists,
+  courseControllers.destroy
+);
+
 export default coursesRouter;

@@ -70,4 +70,16 @@ const register = async (courseId: number, userId: number) => {
 
   await client.query(queryString, [courseId, userId]);
 };
-export default { create, read, register, retrieve };
+
+const destroy = async (courseId: number, userId: number) => {
+  const queryString: string = `
+    UPDATE
+    "userCourses" as
+    SET("active") = true
+    WHERE courseId=$1 AND userId=$2;
+  `;
+
+  await client.query(queryString, [courseId, userId]);
+};
+
+export default { create, read, register, retrieve, destroy };

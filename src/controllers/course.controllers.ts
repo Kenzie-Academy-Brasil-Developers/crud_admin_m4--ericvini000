@@ -1,6 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { courseServices } from "../services";
-import { TCourse, TCourseCreate, TCourseRead, TUserCourses } from "../interfaces";
+import {
+  TCourse,
+  TCourseCreate,
+  TCourseRead,
+  TUserCourses,
+} from "../interfaces";
 import { TUserCoursesRead } from "../interfaces/userCouses.interfaces";
 
 const create = async (
@@ -44,11 +49,23 @@ const retrieve = async (
   res: Response,
   next: NextFunction
 ): Promise<Response> => {
-  const courseId = Number(req.params.courseId);
+  const { courseId } = res.locals;
 
   const courseUsers: TUserCoursesRead = await courseServices.retrieve(courseId);
 
   return res.status(200).json(courseUsers);
 };
 
-export default { create, read, register, retrieve };
+const destroy = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response> => {
+  const { courseId, userId } = res.locals;
+
+  await courseServices.destroy(courseId, userId);
+
+  return res.status(204).send();
+};
+
+export default { create, read, register, retrieve, destroy };
