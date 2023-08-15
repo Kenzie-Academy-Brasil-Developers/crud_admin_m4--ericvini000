@@ -19,7 +19,12 @@ userRouter.post(
   userControllers.create
 );
 
-userRouter.get("", authenticateToken, verifyUserPermission, userControllers.read);
+userRouter.get(
+  "",
+  authenticateToken,
+  verifyUserPermission,
+  userControllers.read
+);
 
 userRouter.get(
   "/:userId/courses",

@@ -4,11 +4,10 @@ import format from "pg-format";
 import { TUserCourses, TUserCreate, TUserRead } from "../interfaces";
 import { userSchemaRead, userSchemaReturn } from "../schemas/user.schemas";
 import { AppError } from "../errors";
-import { userCourseSchema } from "../schemas";
+import { userCourseSchemaRead } from "../schemas";
 import { hash } from "bcryptjs";
 
 const create = async (payload: TUserCreate) => {
-  
   payload.password = await hash(payload.password, 10);
 
   const queryString: string = format(
@@ -35,7 +34,7 @@ const read = async () => {
   return userSchemaRead.parse(queryResult.rows);
 };
 
-const retrieve = async (id: number) => {
+const retrieve = async (userId: number) => {
   const queryString: string = `
   SELECT 
     "c"."id" AS "courseId",
@@ -59,12 +58,12 @@ const retrieve = async (id: number) => {
 
   const queryResult: QueryResult<TUserCourses> = await client.query(
     queryString,
-    [id]
+    [userId]
   );
 
-  if (queryResult.rowCount < 1) throw new AppError("No course found", 404);
+  if (!queryResult.rowCount) throw new AppError("No course found", 404);
 
-  return userCourseSchema.parse(queryResult.rows[0]);
+  return userCourseSchemaRead.parse(queryResult.rows);
 };
 
 export default { create, read, retrieve };

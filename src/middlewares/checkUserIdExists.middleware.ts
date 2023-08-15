@@ -15,7 +15,7 @@ const checkUserIdExists = async (
     SELECT * FROM "users" WHERE id=$1;
   `;
 
-  const queryResult: QueryResult = await client.query(queryString, [userId]);
+  const queryResult: QueryResult<TUser> = await client.query(queryString, [userId]);
 
   if (!queryResult.rowCount) throw new AppError("User not found", 404);
 

@@ -19,7 +19,7 @@ const checkCourseIdExists = async (
     courseId,
   ]);
 
-  if (!queryResult.rowCount) throw new AppError("Course not found", 404);
+  if (!queryResult.rowCount) throw new AppError("No course found", 404);
 
   res.locals = { ...res.locals, courseId };
 

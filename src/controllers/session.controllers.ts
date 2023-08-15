@@ -11,7 +11,7 @@ const userSession = async (
 
   const session: TSessionReturn = await sessionServices.login(payload);
 
-  return res.status(201).json(session);
+  return res.status(200).json(session);
 };
 
 export default userSession;

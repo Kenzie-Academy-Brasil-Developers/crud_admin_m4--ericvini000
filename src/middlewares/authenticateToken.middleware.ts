@@ -7,11 +7,13 @@ const authenticateToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  const bearerToken: string | undefined = req.headers.authorization;
+  const bearerToken: string | undefined = req.headers.authorization!;
 
   if (!bearerToken) throw new AppError("Missing bearer token", 401);
 
   const token = bearerToken.split(" ")[1];
+
+  if (!token) throw new AppError("Missing bearer token", 401);
 
   verify(token, String(process.env.SECRET_KEY), (err: any, decoded: any) => {
     if (err) {

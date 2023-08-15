@@ -4,8 +4,8 @@ import checkUserEmailExists from "./checkUserEmailExists.middleware";
 import checkUserIdExists from "./checkUserIdExists.middleware";
 import checkCourseAndUserIdExists from './checkCourseAndUserIdExists.middleware';
 import checkCourseIdExists from './checkCourseIdExists.middleware';
-import checkTokenExists from './checkTokenExists.middleware';
-import authenticateToken from './checkTokenExists.middleware';
+import checkTokenExists from './authenticateToken.middleware';
+import authenticateToken from './authenticateToken.middleware';
 import verifyUserPermission from './verifyUserPermission.middleware';
 
 export {

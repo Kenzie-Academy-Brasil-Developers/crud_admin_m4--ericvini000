@@ -9,7 +9,7 @@ import {
   courseSchemaCreate,
   courseSchemaRead,
 } from "./course.schemas";
-import { userCourseSchema } from "./userCourse.schemas";
+import { userCourseSchema, userCourseSchemaRead } from "./userCourse.schemas";
 import { sessionSchema } from "./session.schemas";
 
 export {
@@ -22,4 +22,5 @@ export {
   courseSchemaRead,
   userCourseSchema,
   sessionSchema,
+  userCourseSchemaRead,
 };

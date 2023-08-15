@@ -26,7 +26,7 @@ const checkCourseAndUserIdExists = async (
   );
 
   if (!userResult.rowCount || !courseResult.rowCount) {
-    throw new AppError("User/Course not found", 404);
+    throw new AppError("User/course not found", 404);
   }
 
   res.locals = { ...res.locals, userId, courseId };
