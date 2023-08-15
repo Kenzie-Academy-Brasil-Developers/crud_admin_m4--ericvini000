@@ -1,13 +1,20 @@
 import { QueryResult } from "pg";
 import { client } from "../database";
 import format from "pg-format";
-import { TUserCourses, TUserCreate, TUserRead } from "../interfaces";
+import {
+  TUser,
+  TUserCourses,
+  TUserCreate,
+  TUserRead,
+  TUserReturn,
+} from "../interfaces";
 import { userSchemaRead, userSchemaReturn } from "../schemas/user.schemas";
 import { AppError } from "../errors";
 import { userCourseSchemaRead } from "../schemas";
 import { hash } from "bcryptjs";
+import { TUserCoursesRead } from "../interfaces/userCouses.interfaces";
 
-const create = async (payload: TUserCreate) => {
+const create = async (payload: TUserCreate): Promise<TUserReturn> => {
   payload.password = await hash(payload.password, 10);
 
   const queryString: string = format(
@@ -26,15 +33,15 @@ const create = async (payload: TUserCreate) => {
   return userSchemaReturn.parse(queryResult.rows[0]);
 };
 
-const read = async () => {
+const read = async (): Promise<TUserRead> => {
   const queryString: string = `SELECT * FROM "users";`;
 
-  const queryResult: QueryResult<TUserRead> = await client.query(queryString);
+  const queryResult: QueryResult<TUser> = await client.query(queryString);
 
   return userSchemaRead.parse(queryResult.rows);
 };
 
-const retrieve = async (userId: number) => {
+const retrieve = async (userId: number): Promise<TUserCoursesRead> => {
   const queryString: string = `
   SELECT 
     "c"."id" AS "courseId",

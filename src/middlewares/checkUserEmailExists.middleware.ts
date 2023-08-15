@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { client } from "../database";
 import { QueryResult } from "pg";
 import { AppError } from "../errors";
+import { TUser } from "../interfaces";
 
 const checkUserEmailExists = async (
   req: Request,
@@ -14,7 +15,9 @@ const checkUserEmailExists = async (
       SELECT * FROM "users" WHERE email=$1;
     `;
 
-  const queryResult: QueryResult = await client.query(queryString, [email]);
+  const queryResult: QueryResult<TUser> = await client.query(queryString, [
+    email,
+  ]);
 
   if (queryResult.rowCount > 0)
     throw new AppError("Email already registered", 409);

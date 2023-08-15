@@ -11,7 +11,7 @@ const authenticateToken = async (
 
   if (!bearerToken) throw new AppError("Missing bearer token", 401);
 
-  const token = bearerToken.split(" ")[1];
+  const token: string = bearerToken.split(" ")[1];
 
   if (!token) throw new AppError("Missing bearer token", 401);
 

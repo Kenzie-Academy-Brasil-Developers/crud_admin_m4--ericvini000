@@ -7,8 +7,9 @@ import {
   TCourseRead,
   TUserCourses,
 } from "../interfaces";
+import { TUserCoursesRead } from "../interfaces/userCouses.interfaces";
 
-const create = async (payload: TCourseCreate) => {
+const create = async (payload: TCourseCreate): Promise<TCourse> => {
   const queryString: string = format(
     `
       INSERT INTO "courses"
@@ -25,7 +26,7 @@ const create = async (payload: TCourseCreate) => {
   return queryResult.rows[0];
 };
 
-const read = async () => {
+const read = async (): Promise<TCourseRead> => {
   const queryString: string = `SELECT * FROM "courses";`;
 
   const queryResult: QueryResult<TCourse> = await client.query(queryString);
@@ -33,7 +34,7 @@ const read = async () => {
   return queryResult.rows;
 };
 
-const retrieve = async (courseId: number) => {
+const retrieve = async (courseId: number): Promise<TUserCoursesRead> => {
   const queryString: string = `
   SELECT 
     "c"."id" AS "courseId",
@@ -59,7 +60,7 @@ const retrieve = async (courseId: number) => {
   return queryResult.rows;
 };
 
-const register = async (courseId: number, userId: number) => {
+const register = async (courseId: number, userId: number): Promise<void> => {
   const queryString: string = `
     INSERT INTO 
     "userCourses"
@@ -71,8 +72,7 @@ const register = async (courseId: number, userId: number) => {
   await client.query(queryString, [courseId, userId]);
 };
 
-const destroy = async (courseId: number, userId: number) => {
-
+const destroy = async (courseId: number, userId: number): Promise<void> => {
   const queryString: string = `
   UPDATE "userCourses" 
   SET "active"= true

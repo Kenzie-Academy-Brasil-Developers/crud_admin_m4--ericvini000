@@ -3,8 +3,7 @@ import { courseServices } from "../services";
 import {
   TCourse,
   TCourseCreate,
-  TCourseRead,
-  TUserCourses,
+  TCourseRead
 } from "../interfaces";
 import { TUserCoursesRead } from "../interfaces/userCouses.interfaces";
 
