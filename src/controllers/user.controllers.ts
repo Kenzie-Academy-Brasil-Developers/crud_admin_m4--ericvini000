@@ -1,6 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { userServices } from "../services";
-import { TUserCreate, TUserRead, TUserReturn } from "../interfaces";
+import {
+  TUserCourses,
+  TUserCreate,
+  TUserRead,
+  TUserReturn,
+} from "../interfaces";
 
 const create = async (
   req: Request,
@@ -30,7 +35,9 @@ const retrieve = async (
 ): Promise<Response> => {
   const { userId } = res.locals;
 
-  const user: TUserReturn = await userServices.retrieve(userId);
+  const user: TUserCourses = await userServices.retrieve(
+    Number(req.params.userId)
+  );
 
   return res.status(200).json(user);
 };

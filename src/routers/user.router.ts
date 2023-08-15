@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { userControllers } from "../controllers";
 import {
+  checkCourseAndUserIdExists,
   checkUserEmailExists,
   checkUserIdExists,
   zodValidateBody,
@@ -18,6 +19,7 @@ userRouter.post(
 );
 
 userRouter.get("", userControllers.read);
-userRouter.get("/:userId/courses", userControllers.retrieve);
+
+userRouter.get("/:userId/courses", checkUserIdExists, userControllers.retrieve);
 
 export default userRouter;

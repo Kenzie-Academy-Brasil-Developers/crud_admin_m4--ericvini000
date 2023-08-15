@@ -1,8 +1,16 @@
 import { QueryResult } from "pg";
 import { client } from "../database";
 import format from "pg-format";
-import { TUser, TUserCreate, TUserRead, TUserReturn } from "../interfaces";
+import {
+  TUser,
+  TUserCourses,
+  TUserCreate,
+  TUserRead,
+  TUserReturn,
+} from "../interfaces";
 import { userSchemaRead, userSchemaReturn } from "../schemas/user.schemas";
+import { AppError } from "../errors";
+import { userCourseSchema } from "../schemas";
 
 const create = async (payload: TUserCreate) => {
   const queryString: string = format(
@@ -31,24 +39,34 @@ const read = async () => {
 
 const retrieve = async (id: number) => {
   const queryString: string = `
-
   SELECT 
-    *
+    "c"."id" AS "courseId",
+    "c"."name" AS "courseName",
+    "c"."description" AS "courseDescription",
+    "uc"."active" AS "courseActive",
+    "u"."id" AS "userId",
+    "u"."name" AS "userName"
   FROM 
-    "users" AS "u"
-  JOIN
     "userCourses" AS "uc"
+  JOIN
+    "users" AS "u"
+  ON
+    "uc"."userId" = "u"."id"
   JOIN
     "courses" AS "c"
   ON
-    "u"."id"="uc"."userId"
-  WHERE
-    id=$1;
+    "uc"."courseId"= "c"."id"
+  WHERE "u"."id"=$1;
   `;
 
-  const queryResult: QueryResult = await client.query(queryString, [id]);
+  const queryResult: QueryResult<TUserCourses> = await client.query(
+    queryString,
+    [id]
+  );
 
-  return userSchemaReturn.parse(queryResult.rows[0]);
+  if (queryResult.rowCount < 1) throw new AppError("No course found", 404);
+
+  return userCourseSchema.parse(queryResult.rows[0]);
 };
 
 export default { create, read, retrieve };

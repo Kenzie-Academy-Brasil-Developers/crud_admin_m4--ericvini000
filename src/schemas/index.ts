@@ -11,6 +11,8 @@ import {
   courseSchemaRead,
 } from "./course.schemas";
 
+import { userCourseSchema } from "./userCourse.schemas";
+
 export {
   userSchema,
   userSchemaCreate,
@@ -19,4 +21,5 @@ export {
   courseSchema,
   courseSchemaCreate,
   courseSchemaRead,
+  userCourseSchema,
 };

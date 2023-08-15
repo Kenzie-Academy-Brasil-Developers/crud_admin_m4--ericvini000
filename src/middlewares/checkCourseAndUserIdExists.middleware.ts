@@ -11,18 +11,19 @@ const checkCourseAndUserIdExists = async (
   const courseId: number = Number(req.params.courseId);
   const userId: number = Number(req.params.userId);
 
-  const courseString: string = `
-      SELECT * FROM "courses" WHERE id=$1;
-    `;
-  const userString: string = `
-      SELECT * FROM "users" WHERE id=$1;
-    `;
+  const userResult: QueryResult = await client.query(
+    `
+    SELECT * FROM "courses" WHERE id=$1;
+  `,
+    [userId]
+  );
 
-  const userResult: QueryResult = await client.query(userString, [userId]);
-
-  const courseResult: QueryResult = await client.query(courseString, [
-    courseId,
-  ]);
+  const courseResult: QueryResult = await client.query(
+    `
+    SELECT * FROM "users" WHERE id=$1;
+  `,
+    [courseId]
+  );
 
   if (!userResult.rowCount || !courseResult.rowCount) {
     throw new AppError("User/Course not found", 404);
